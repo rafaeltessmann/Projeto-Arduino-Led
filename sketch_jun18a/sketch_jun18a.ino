@@ -12,6 +12,7 @@ void setup() {
   Serial.begin(9600);
   Ethernet.begin(mac, ip);
   server.begin();
+  Serial.println("iniciou essa bagaça...");
 }
 
 void loop() {
@@ -30,7 +31,6 @@ void loop() {
         }
         
         if (c == '\n' && currentLineIsBlank) {
-           Serial.println("Conectado!");
           client.println("HTTP/1.1 200 OK");
           client.println("Content-Type: text/html");
           client.println("Connection: close");  
@@ -40,11 +40,11 @@ void loop() {
           client.println("<body>");
           client.println("<center><h1>Controlando Nossa Casinha</h1></center><br>");
           client.println("<br>");       
-         client.println("<br></form><br>");     
-         client.println("<p> <font size='7px'>Controles:</font> </p>");      
-         client.println("<h1><a href=\"/?button1\"\">Luz A</a></h1>");
-         client.println("<br><br>");
-         client.println("<h1><a href=\"/?button2\"\">Luz B</a></h1>"); 
+          client.println("<br></form><br>");     
+          client.println("<p> <font size='7px'>Controles:</font> </p>");      
+          client.println("<h1><a href=\"/?led1\"\">Led A</a></h1>");
+          client.println("<br><br>");
+          client.println("<h1><a href=\"/?led2\"\">Led B</a></h1>"); 
           client.println("</body>");         
           client.println("</html>");        
         break;     
@@ -61,14 +61,12 @@ void loop() {
     client.stop();
     
    
-    if (readString.indexOf("?button1") >0){
-      
-      Serial.println("Luz A acendeu.");   
+    if (readString.indexOf("?led1") >0){
+      Serial.println("Led 1 acendeu.");   
     }
     
-    if (readString.indexOf("?button2") >0){
-      Serial.println("Luz B acendeu.");
-    
+    if (readString.indexOf("?led2") >0){
+      Serial.println("Led 2 acendeu.");
     }
    
     
@@ -76,5 +74,4 @@ void loop() {
       
   }
 }
-
 

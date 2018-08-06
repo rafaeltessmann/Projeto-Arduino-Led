@@ -8,11 +8,16 @@ IPAddress ip(192,168,1,200);
 String readString;
 EthernetServer server(80);
 
+// LED conectado ao pino digital 7
+int led1 = 9;
+
 void setup() {
   Serial.begin(9600);
   Ethernet.begin(mac, ip);
   server.begin();
-  Serial.println("iniciou essa bagaça...");
+  // configura pino digital como saída
+  pinMode(led1, OUTPUT); 
+  Serial.println("iniciou...");
 }
 
 void loop() {
@@ -31,6 +36,15 @@ void loop() {
         }
         
         if (c == '\n' && currentLineIsBlank) {
+
+        /*  client.println("HTTP/1.1 200 OK");
+          client.println("Content-Type: text/html");
+          client.println("Connection: close"); // the connection will be closed after completion of the response
+          client.println("Refresh: 2"); // refresh the page automatically every 5 sec
+          client.println();
+          client.println("");
+          client.println("");*/
+          
           client.println("HTTP/1.1 200 OK");
           client.println("Content-Type: text/html");
           client.println("Connection: close");  
@@ -42,9 +56,9 @@ void loop() {
           client.println("<br>");       
           client.println("<br></form><br>");     
           client.println("<p> <font size='7px'>Controles:</font> </p>");      
-          client.println("<h1><a href=\"/?led1\"\">Led A</a></h1>");
+          client.println("<h1><a href=\"/?led1on\"\">Led A On</a></h1>");
           client.println("<br><br>");
-          client.println("<h1><a href=\"/?led2\"\">Led B</a></h1>"); 
+          client.println("<h1><a href=\"/?led1off\"\">Led A Off</a></h1>"); 
           client.println("</body>");         
           client.println("</html>");        
         break;     
@@ -61,12 +75,16 @@ void loop() {
     client.stop();
     
    
-    if (readString.indexOf("?led1") >0){
-      Serial.println("Led 1 acendeu.");   
+    if (readString.indexOf("?led1on") >0){
+      // liga o LED
+      digitalWrite(led1, HIGH);
+      Serial.println("Led 1 ligou.");   
     }
     
-    if (readString.indexOf("?led2") >0){
-      Serial.println("Led 2 acendeu.");
+    if (readString.indexOf("?led1off") >0){
+      // desliga o LED
+      digitalWrite(led1, LOW); 
+      Serial.println("Led 1 desligou.");
     }
    
     

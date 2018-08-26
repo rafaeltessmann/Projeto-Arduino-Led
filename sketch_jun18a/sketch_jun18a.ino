@@ -8,15 +8,22 @@ IPAddress ip(192,168,1,200);
 String readString;
 EthernetServer server(80);
 
-// LED conectado ao pino digital 7
+// LED conectado ao pino digital 9
 int led1 = 9;
+int led2 = 8;
+int led3 = 7;
 
 void setup() {
+  
   Serial.begin(9600);
   Ethernet.begin(mac, ip);
   server.begin();
+  
   // configura pino digital como saída
-  pinMode(led1, OUTPUT); 
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT); 
+  pinMode(led3, OUTPUT);
+  
   Serial.println("iniciou...");
 }
 
@@ -37,30 +44,15 @@ void loop() {
         
         if (c == '\n' && currentLineIsBlank) {
 
-        /*  client.println("HTTP/1.1 200 OK");
-          client.println("Content-Type: text/html");
-          client.println("Connection: close"); // the connection will be closed after completion of the response
-          client.println("Refresh: 2"); // refresh the page automatically every 5 sec
-          client.println();
-          client.println("");
-          client.println("");*/
-          
           client.println("HTTP/1.1 200 OK");
           client.println("Content-Type: text/html");
-          client.println("Connection: close");  
+          client.println("Connection: close"); // the connection will be closed after completion of the response
+          //client.println("Refresh: 2");  refresh the page automatically every 5 sec
           client.println();
-          client.println("<!DOCTYPE HTML>");
-          client.println("<html><form method=post action=192.168.1.200>");
-          client.println("<body>");
-          client.println("<center><h1>Controlando Nossa Casinha</h1></center><br>");
-          client.println("<br>");       
-          client.println("<br></form><br>");     
-          client.println("<p> <font size='7px'>Controles:</font> </p>");      
-          client.println("<h1><a href=\"/?led1on\"\">Led A On</a></h1>");
-          client.println("<br><br>");
-          client.println("<h1><a href=\"/?led1off\"\">Led A Off</a></h1>"); 
-          client.println("</body>");         
-          client.println("</html>");        
+          client.println("");
+          client.println("");
+          
+               
         break;     
         if (c == '\n') {
           currentLineIsBlank = true;
@@ -74,22 +66,48 @@ void loop() {
     delay(1);
     client.stop();
     
-   
+   //LED 1
     if (readString.indexOf("?led1on") >0){
       // liga o LED
       digitalWrite(led1, HIGH);
-      Serial.println("Led 1 ligou.");   
+      Serial.println("Led 1 ligou.");  
     }
-    
+
     if (readString.indexOf("?led1off") >0){
       // desliga o LED
       digitalWrite(led1, LOW); 
       Serial.println("Led 1 desligou.");
     }
+
+    //LED 2
+     if (readString.indexOf("?led2on") >0){
+      // liga o LED
+      digitalWrite(led2, HIGH);
+      Serial.println("Led 2 ligou.");  
+    }
+    
+    if (readString.indexOf("?led2off") >0){
+      // desliga o LED
+      digitalWrite(led2, LOW); 
+      Serial.println("Led 2 desligou.");
+    }
+
+    //LED 3
+     if (readString.indexOf("?led3on") >0){
+      // liga o LED
+      digitalWrite(led3, HIGH);
+      Serial.println("Led 3 ligou.");  
+    }
+    
+    if (readString.indexOf("?led3off") >0){
+      // desliga o LED
+      digitalWrite(led3, LOW); 
+      Serial.println("Led 3 desligou.");
+    }
    
     
     readString="";
       
-  }
+  } 
 }
 

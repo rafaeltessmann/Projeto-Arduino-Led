@@ -30,7 +30,12 @@ Metodologia
   A equipe
 
   Dierlys Rodrigues - Técnico em Informática
+
   Geordano Lima - Técnico em Informática
+
   Jefferson Lopes - Designer Gráfico
+
   Madson Nunes - Técnico em Automação Industrial
+
   Rafael Tessmann - Técnico em Informática
+  
